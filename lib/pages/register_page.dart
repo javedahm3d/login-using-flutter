@@ -1,26 +1,29 @@
 import 'package:campus/components/my_button.dart';
 import 'package:campus/components/my_textfield.dart';
 import 'package:campus/components/square_tile.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
 
-  LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   // text editing controllers
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  // sign user in method
-  Future signUserIn() async {
+  // sign user up method
+
+  Future signUserUp() async {
+
     //to show loading screen
     showDialog(
         context: context,
@@ -30,22 +33,27 @@ class _LoginPageState extends State<LoginPage> {
           );
         });
 
-    //firbase authentication
+    //firbase authentication to create new user
 
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+    if (passwordController.text == confirmPasswordController.text) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim());
+ 
+            //pop the loading circle
+            Navigator.pop(context);
 
-          //pop the loading circle
-          Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        //pop the loading circle
+        Navigator.pop(context);
+        showErrorMessage(e.code.replaceAll('-', " "));
+      }
+    } 
+    else {
+      //passwords not matching error 
 
-    } on FirebaseAuthException catch (e) {
-      
-       //pop the loading circle
-      Navigator.pop(context);
-      //show error message
-      showErrorMessage(e.code.replaceAll('-', " "));
+      showErrorMessage("Passwords don't match");
     }
   }
 
@@ -78,8 +86,8 @@ class _LoginPageState extends State<LoginPage> {
                 // logo
 
                 Container(
-                  width: 200,
-                  height: 200,
+                  width: 150,
+                  height: 150,
                   child: Image.asset('lib/images/app_logo.png'),
                 ),
 
@@ -87,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // welcome back, you've been missed!
                 Text(
-                  'Welcome back you\'ve been missed!',
+                  'let\'s create an account for you!',
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 16,
@@ -114,24 +122,17 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 10),
 
-                // forgot password?
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
+                // confirm password textfield
+                MyTextField(
+                  controller: confirmPasswordController,
+                  hintText: 'Confirm Password',
+                  obscureText: true,
                 ),
 
                 const SizedBox(height: 25),
 
                 // sign in button
-                MyButton(text: "Sign In", onTap: signUserIn),
+                MyButton(text: 'Sign Up', onTap: signUserUp),
 
                 const SizedBox(height: 50),
 
@@ -168,36 +169,36 @@ class _LoginPageState extends State<LoginPage> {
                 // google + apple sign in buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children:  const [
+                  children: const [
                     // google button
                     SquareTile(
                       // onTap: () => AuthService().signInWithGoogle(),
                       imagePath: 'lib/images/google.png'),
 
-                    const SizedBox(width: 25),
+                    SizedBox(width: 25),
 
                     // apple button
                     SquareTile(
-                      // onTap: () { },
+                      // onTap: () {},
                       imagePath: 'lib/images/apple.png')
                   ],
                 ),
 
                 const SizedBox(height: 50),
 
-                // not a member? register now
+                // already have account? login now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a member?',
+                      'already have account ?',
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        'Register now',
+                        'Login now',
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
