@@ -1,16 +1,15 @@
-# campus
+//for integrating the application with firbase 
 
-A new Flutter project.
+first make a project on firebase
 
-## Getting Started
+download firebase cli
+then follow the steps mentioned in the official docs :  https://firebase.google.com/docs/flutter/setup?authuser=0&hl=en&platform=ios
+till Step 3: Initialize Firebase in your app
+             1) From your Flutter project directory, run the following command to install the core plugin:
 
-This project is a starting point for a Flutter application.
+----------------------------------------------------------------------------------------------------------------------
 
-A few resources to get you started if this is your first Flutter project:
+after these go to your project in firebase -> auhtencication - > sign-in method    and enable the email option
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+that's it !!!
