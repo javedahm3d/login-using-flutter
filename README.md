@@ -13,3 +13,4 @@ after these go to your project in firebase -> auhtencication - > sign-in method 
 
 
 that's it !!!
+ 
