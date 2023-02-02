@@ -1,16 +1,8 @@
-# campus
+login page using flutter and firebase                      
 
-A new Flutter project.
+contents                                          
+-> login page  (email and google account)                                           
+-> signup page                                                                                       
+-> get password reset mail using forgot password option                 
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![login_ui](https://user-images.githubusercontent.com/79010097/216256351-f3951be1-211e-4b59-9465-9bb12ecc85e4.png)
